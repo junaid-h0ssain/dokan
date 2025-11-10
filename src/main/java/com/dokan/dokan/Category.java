@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DokanApplication {
+public class Category {
 
     static void main(String[] args) {
-        SpringApplication.run(DokanApplication.class, args);
+        SpringApplication.run(Category.class, args);
     }
 
 }
