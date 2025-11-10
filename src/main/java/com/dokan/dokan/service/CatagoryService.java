@@ -1,13 +1,13 @@
 package com.dokan.dokan.service;
 
-import com.dokan.dokan.model.Category;
+import com.dokan.dokan.model.Catagory;
 
 import java.util.List;
 
 public interface CatagoryService {
-    List<Category> getAllCategories();
-    Category getCategoryById(Long catagoryId);
-    Category getCategoryByName(String catagoryName);
-    void createCategory(Category category);
-    String deleteCategory(Long catagoryId);
+    List<Catagory> getAllCategories();
+    Catagory getcatagoryById(Long catagoryId);
+    Catagory getcatagoryByName(String catagoryName);
+    void createcatagory(Catagory catagory);
+    String deletecatagory(Long catagoryId);
 }

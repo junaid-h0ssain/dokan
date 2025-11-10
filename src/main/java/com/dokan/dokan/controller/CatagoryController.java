@@ -2,7 +2,9 @@ package com.dokan.dokan.controller;
 
 import com.dokan.dokan.service.CatagoryService;
 import lombok.Data;
-import com.dokan.dokan.model.Category;
+import com.dokan.dokan.model.Catagory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,27 +22,33 @@ public class CatagoryController {
     }
 
     //get function
-    @GetMapping("api/public/categories")
-    public List<Category> getCategories() {
+    @GetMapping("api/public/catagories")
+    public List<Catagory> getCategories() {
         return catagoryService.getAllCategories();
     }
 
     //get func
     @GetMapping("api/public/catagories/{catagoryId}")
-    public Category getCategoryById(@PathVariable("catagoryId") Long catagoryId) {
-        return catagoryService.getCategoryById(catagoryId);
+    public Catagory getcatagoryById(@PathVariable("catagoryId") Long catagoryId) {
+        return catagoryService.getcatagoryById(catagoryId);
     }
 
     //post function
-    @PostMapping("api/public/categories")
-    public String addCategory(@RequestBody Category category) {
-        catagoryService.createCategory(category);
-        return "Category added";
-    }
+//    @PostMapping("api/public/catagories")
+//    public String addcatagory(@RequestBody catagory catagory) {
+//        catagoryService.createcatagory(catagory);
+//        return "catagory added";
+//    }
 
     //delete func
-    @DeleteMapping("api/public/categories/{catagoryId}")
-    public String deleteCategory(@PathVariable Long catagoryId) {
-        return catagoryService.deleteCategory(catagoryId);
+    @DeleteMapping("api/public/catagories/{catagoryId}")
+    public String deletecatagory(@PathVariable Long catagoryId) {
+        return catagoryService.deletecatagory(catagoryId);
+    }
+
+    @PostMapping("/api/public/catagories")
+    public ResponseEntity<String> addcatagory(@RequestBody Catagory catagory) {
+        catagoryService.createcatagory(catagory);
+        return new ResponseEntity<>("catagory " + catagory.getCatagoryId() + " added", HttpStatus.OK);
     }
 }
