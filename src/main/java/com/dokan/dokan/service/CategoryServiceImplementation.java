@@ -39,10 +39,10 @@ public class CategoryServiceImplementation implements CategoryService {
         if (category == null) {
             return "Category "+ categoryName +" not found";
         }
-        String oldcategoryName = category.getCategoryName();
+        String oldCategoryName = category.getCategoryName();
         category.setCategoryName(categoryName);
 
-        return "Category "+ oldcategoryName+" updated to " + category.getCategoryName();
+        return "Category "+ oldCategoryName+" updated to " + category.getCategoryName();
     }
 
     @Override
