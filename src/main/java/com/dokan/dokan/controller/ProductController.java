@@ -33,4 +33,16 @@ public class ProductController {
         }
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
+
+    @GetMapping("/api/public/categories/{categoryId}/products")
+    public ResponseEntity<List<Product>> getProductsByCategory(@PathVariable("categoryId") Long categoryId) {
+        List<Product> products = productService.getProductsByCategory(categoryId);
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
+    @GetMapping("/api/public/products/search")
+    public ResponseEntity<List<Product>> searchProducts(@RequestParam("keyword") String keyword) {
+        List<Product> products = productService.searchProducts(keyword);
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
 }
