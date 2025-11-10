@@ -9,5 +9,5 @@ public interface CatagoryService {
     Catagory getcatagoryById(Long catagoryId);
     Catagory getcatagoryByName(String catagoryName);
     void createcatagory(Catagory catagory);
-    String deletecatagory(Long catagoryId);
+    Boolean deletecatagory(Long catagoryId);
 }

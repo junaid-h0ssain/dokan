@@ -22,15 +22,30 @@ public class CatagoryController {
     }
 
     //get function
-    @GetMapping("api/public/catagories")
-    public List<Catagory> getCategories() {
-        return catagoryService.getAllCategories();
+//    @GetMapping("api/public/catagories")
+//    public List<Catagory> getCategories() {
+//        return catagoryService.getAllCategories();
+//    }
+
+    @GetMapping("/api/public/catagories")
+    public ResponseEntity<List<Catagory>> getCatagories() {
+        catagoryService.getAllCategories();
+        return new ResponseEntity<>(catagoryService.getAllCategories(), HttpStatus.OK);
     }
 
     //get func
+//    @GetMapping("api/public/catagories/{catagoryId}")
+//    public Catagory getcatagoryById(@PathVariable("catagoryId") Long catagoryId) {
+//        return catagoryService.getcatagoryById(catagoryId);
+//    }
+
     @GetMapping("api/public/catagories/{catagoryId}")
-    public Catagory getcatagoryById(@PathVariable("catagoryId") Long catagoryId) {
-        return catagoryService.getcatagoryById(catagoryId);
+    public ResponseEntity<Catagory> getcatagoryById(@PathVariable("catagoryId") Long catagoryId) {
+        Catagory catagory = catagoryService.getcatagoryById(catagoryId);
+        if (catagory == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(catagoryService.getcatagoryById(catagoryId), HttpStatus.OK);
     }
 
     //post function
@@ -40,15 +55,26 @@ public class CatagoryController {
 //        return "catagory added";
 //    }
 
-    //delete func
-    @DeleteMapping("api/public/catagories/{catagoryId}")
-    public String deletecatagory(@PathVariable Long catagoryId) {
-        return catagoryService.deletecatagory(catagoryId);
-    }
-
     @PostMapping("/api/public/catagories")
     public ResponseEntity<String> addcatagory(@RequestBody Catagory catagory) {
         catagoryService.createcatagory(catagory);
-        return new ResponseEntity<>("catagory " + catagory.getCatagoryId() + " added", HttpStatus.OK);
+        return new ResponseEntity<>("catagory " + catagory.getCatagoryId() + " added", HttpStatus.CREATED);
     }
+
+    //delete func
+//    @DeleteMapping("api/public/catagories/{catagoryId}")
+//    public String deletecatagory(@PathVariable Long catagoryId) {
+//        return catagoryService.deletecatagory(catagoryId);
+//    }
+
+    @DeleteMapping("api/public/catagories/{catagoryId}")
+    public ResponseEntity<String> deletecatagory(@PathVariable Long catagoryId) {
+        Boolean status = catagoryService.deletecatagory(catagoryId);
+        if (status) {
+            return new ResponseEntity<>("catagory " + catagoryId + " deleted", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("catagory not found or does not exist", HttpStatus.NOT_FOUND);
+    }
+
+
 }

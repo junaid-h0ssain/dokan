@@ -39,12 +39,12 @@ public class CatagoryServiceImplementation implements CatagoryService {
     }
 
     @Override
-    public String deletecatagory(Long catagoryId) {
+    public Boolean deletecatagory(Long catagoryId) {
         Catagory catagory = getcatagoryById(catagoryId);
         if (catagory == null) {
-            return "catagory not found or does not exist";
+            return false;
         }
         categories.remove(catagory);
-        return "catagory " + catagoryId + " has been deleted";
+        return true;
     }
 }
