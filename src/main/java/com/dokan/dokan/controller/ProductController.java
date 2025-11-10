@@ -59,4 +59,30 @@ public class ProductController {
         productService.createProduct(product);
         return new ResponseEntity<>("Product created successfully", HttpStatus.CREATED);
     }
+
+    @PutMapping("/api/public/products/{productId}")
+    public ResponseEntity<String> updateProduct(@PathVariable("productId") Long productId, @RequestBody Product productDetails) {
+        // Validate price and quantity
+        if (productDetails.getPrice() != null && productDetails.getPrice() < 0) {
+            return new ResponseEntity<>("Price must be greater than or equal to zero", HttpStatus.BAD_REQUEST);
+        }
+        if (productDetails.getQuantity() != null && productDetails.getQuantity() < 0) {
+            return new ResponseEntity<>("Quantity must be greater than or equal to zero", HttpStatus.BAD_REQUEST);
+        }
+        
+        String result = productService.updateProduct(productId, productDetails);
+        if (result.contains("not found") || result.contains("does not exist")) {
+            return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/api/public/products/{productId}")
+    public ResponseEntity<String> deleteProduct(@PathVariable("productId") Long productId) {
+        Boolean status = productService.deleteProduct(productId);
+        if (status) {
+            return new ResponseEntity<>("Product " + productId + " deleted successfully", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Product not found or does not exist", HttpStatus.NOT_FOUND);
+    }
 }
