@@ -4,6 +4,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 README dokan.md
+datafiles
 
 ### STS ###
 .apt_generated
