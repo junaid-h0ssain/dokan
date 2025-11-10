@@ -45,4 +45,18 @@ public class ProductController {
         List<Product> products = productService.searchProducts(keyword);
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
+
+    @PostMapping("/api/public/products")
+    public ResponseEntity<String> createProduct(@RequestBody Product product) {
+        // Validate price and quantity
+        if (product.getPrice() != null && product.getPrice() < 0) {
+            return new ResponseEntity<>("Price must be greater than or equal to zero", HttpStatus.BAD_REQUEST);
+        }
+        if (product.getQuantity() != null && product.getQuantity() < 0) {
+            return new ResponseEntity<>("Quantity must be greater than or equal to zero", HttpStatus.BAD_REQUEST);
+        }
+        
+        productService.createProduct(product);
+        return new ResponseEntity<>("Product created successfully", HttpStatus.CREATED);
+    }
 }
