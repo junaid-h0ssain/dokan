@@ -40,7 +40,7 @@ public class CategoryController {
 //    }
 
     @GetMapping("api/public/categories/{categoryId}")
-    public ResponseEntity<Category> getcategoryById(@PathVariable("categoryId") Long categoryId) {
+    public ResponseEntity<Category> getCategoryById(@PathVariable("categoryId") Long categoryId) {
         Category category = categoryService.getCategoryById(categoryId);
         if (category == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
