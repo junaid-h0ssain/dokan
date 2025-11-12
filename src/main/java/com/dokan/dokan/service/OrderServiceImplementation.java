@@ -18,24 +18,18 @@ public class OrderServiceImplementation implements OrderService {
 
     @Override
     public Order createOrder(Order order) {
-
-        order.setOrderStatus(OrderStatus.PENDING);
-        
-        order.setOrderDate(LocalDateTime.now());
-
-        LocalDateTime now = LocalDateTime.now();
-        order.setCreatedAt(now);
-        order.setUpdatedAt(now);
-
+        // Calculate and set total amount
         Double totalAmount = calculateOrderTotal(order);
         order.setTotalAmount(totalAmount);
 
+        // Set bidirectional relationship for order items
         if (order.getOrderItems() != null) {
             for (OrderItem item : order.getOrderItems()) {
                 item.setOrder(order);
             }
         }
         
+        // Save order (timestamps and status will be set by @PrePersist)
         return orderRepository.save(order);
     }
 
@@ -67,7 +61,7 @@ public class OrderServiceImplementation implements OrderService {
         }
         
         existingOrder.setOrderStatus(newStatus);
-        existingOrder.setUpdatedAt(LocalDateTime.now());
+        // updatedAt will be set automatically by @PreUpdate
         
         return orderRepository.save(existingOrder);
     }

@@ -5,6 +5,8 @@ target/
 !**/src/test/**/target/
 README dokan.md
 datafiles
+src/test/java/com/dokan/dokan/integration
+src/test/java/com/dokan/dokan/service/
 
 ### STS ###
 .apt_generated
