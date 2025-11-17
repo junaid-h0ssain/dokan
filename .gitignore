@@ -16,6 +16,7 @@ src/test/java/com/dokan/dokan/service/
 .settings
 .springBeans
 .sts4-cache
+*.py
 
 ### IntelliJ IDEA ###
 .idea
@@ -31,6 +32,7 @@ src/test/java/com/dokan/dokan/service/
 /nbdist/
 /.nb-gradle/
 build/
+docs
 !**/src/main/**/build/
 !**/src/test/**/build/
 
