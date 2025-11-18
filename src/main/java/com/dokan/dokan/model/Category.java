@@ -2,6 +2,7 @@ package com.dokan.dokan.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 
 @Entity(name = "categories")
@@ -13,6 +14,7 @@ public class Category {
     private String categoryName;
     
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Product> products;
 
     // constructor
