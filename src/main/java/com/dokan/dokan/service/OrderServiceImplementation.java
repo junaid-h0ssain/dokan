@@ -3,7 +3,9 @@ package com.dokan.dokan.service;
 import com.dokan.dokan.model.Order;
 import com.dokan.dokan.model.OrderItem;
 import com.dokan.dokan.model.OrderStatus;
+import com.dokan.dokan.model.Product;
 import com.dokan.dokan.repository.OrderRepository;
+import com.dokan.dokan.repository.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +18,24 @@ public class OrderServiceImplementation implements OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    private ProductRepo productRepo;
+
     @Override
     public Order createOrder(Order order) {
+        // Set price for each order item from the product
+        if (order.getOrderItems() != null) {
+            for (OrderItem item : order.getOrderItems()) {
+                if (item.getPriceAtOrder() == null && item.getProduct() != null) {
+                    Product product = productRepo.findById(item.getProduct().getProductId()).orElse(null);
+                    if (product != null) {
+                        item.setPriceAtOrder(product.getPrice());
+                    }
+                }
+                item.setOrder(order);
+            }
+        }
+
         // Calculate and set total amount
         Double totalAmount = calculateOrderTotal(order);
         order.setTotalAmount(totalAmount);
@@ -77,7 +95,11 @@ public class OrderServiceImplementation implements OrderService {
         }
         
         return order.getOrderItems().stream()
-                .mapToDouble(item -> item.getPriceAtOrder() * item.getQuantity())
+                .mapToDouble(item -> {
+                    Double price = item.getPriceAtOrder() != null ? item.getPriceAtOrder() : 0.0;
+                    Integer qty = item.getQuantity() != null ? item.getQuantity() : 0;
+                    return price * qty;
+                })
                 .sum();
     }
 }

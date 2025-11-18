@@ -118,8 +118,12 @@ class UIManager {
    * @param {boolean} isLoading - True to show loading, false to hide
    */
   showLoading(isLoading) {
-    console.log("yo oyo oy")
-    
+    const loadingOverlay = document.getElementById('loading-overlay');
+    if (isLoading) {
+      loadingOverlay.classList.remove('hidden');
+    } else {
+      loadingOverlay.classList.add('hidden');
+    }
   }
 
   /**
