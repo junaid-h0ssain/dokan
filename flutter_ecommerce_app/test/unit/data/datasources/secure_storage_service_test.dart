@@ -24,7 +24,7 @@ void main() {
         const key = StorageKeys.authToken;
         const token = 'test_jwt_token_12345';
         when(() => mockSecureStorage.write(key: key, value: token))
-            .thenAnswer((_) async => null);
+            .thenAnswer((_) async {});
 
         // Act
         await secureStorageService.saveToken(key, token);
@@ -96,7 +96,7 @@ void main() {
         // Arrange
         const key = StorageKeys.authToken;
         when(() => mockSecureStorage.delete(key: key))
-            .thenAnswer((_) async => null);
+            .thenAnswer((_) async {});
 
         // Act
         await secureStorageService.deleteToken(key);
@@ -123,7 +123,7 @@ void main() {
       test('should clear all data from secure storage', () async {
         // Arrange
         when(() => mockSecureStorage.deleteAll())
-            .thenAnswer((_) async => null);
+            .thenAnswer((_) async {});
 
         // Act
         await secureStorageService.clearAll();

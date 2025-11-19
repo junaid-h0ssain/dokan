@@ -6,8 +6,10 @@ import 'config/theme.dart';
 import 'data/datasources/local/secure_storage_service_impl.dart';
 import 'data/datasources/remote/dokan_api_client.dart';
 import 'data/repositories/auth_repository_impl.dart';
+import 'data/repositories/product_repository_impl.dart';
 import 'data/services/auth_service.dart';
 import 'presentation/providers/auth_provider.dart';
+import 'presentation/providers/product_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,11 +33,17 @@ class MyApp extends StatelessWidget {
       authRepository: authRepository,
       apiClient: apiClient,
     );
+    final productRepository = ProductRepositoryImpl(
+      apiClient: apiClient,
+    );
 
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
           create: (_) => AuthProvider(authService: authService)..initialize(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ProductProvider(productRepository: productRepository),
         ),
         // Additional providers will be added during implementation
       ],
