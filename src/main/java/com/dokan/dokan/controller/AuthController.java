@@ -21,12 +21,12 @@ public class AuthController {
     /**
      * Register a new user
      * @param request RegisterRequest containing email and password
-     * @return ResponseEntity with User and HTTP 201 status
+     * @return ResponseEntity with AuthResponse and HTTP 201 status
      */
     @PostMapping("/register")
-    public ResponseEntity<User> register(@Valid @RequestBody RegisterRequest request) {
-        User user = authService.registerUser(request);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+    public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterRequest request) {
+        AuthResponse authResponse = authService.registerUser(request);
+        return new ResponseEntity<>(authResponse, HttpStatus.CREATED);
     }
     
     /**

@@ -3,6 +3,7 @@ package com.dokan.dokan.service;
 import com.dokan.dokan.dto.AuthResponse;
 import com.dokan.dokan.dto.LoginRequest;
 import com.dokan.dokan.dto.RegisterRequest;
+import com.dokan.dokan.dto.UserDto;
 import com.dokan.dokan.exception.EmailAlreadyExistsException;
 import com.dokan.dokan.exception.InvalidCredentialsException;
 import com.dokan.dokan.model.User;
@@ -23,10 +24,10 @@ public class AuthService {
     /**
      * Registers a new user with email and password
      * @param request RegisterRequest containing email and password
-     * @return User entity without password
+     * @return AuthResponse with JWT token and user info
      * @throws EmailAlreadyExistsException if email already exists
      */
-    public User registerUser(RegisterRequest request) {
+    public AuthResponse registerUser(RegisterRequest request) {
         // Check if email already exists
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new EmailAlreadyExistsException("Email already exists: " + request.getEmail());
@@ -43,7 +44,13 @@ public class AuthService {
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         
         // Save user to database
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        
+        // Generate JWT token
+        String token = jwtTokenProvider.generateToken(savedUser);
+        
+        // Return AuthResponse with token and user info
+        return new AuthResponse(token, UserDto.fromUser(savedUser));
     }
     
     /**
@@ -66,6 +73,6 @@ public class AuthService {
         String token = jwtTokenProvider.generateToken(user);
         
         // Return AuthResponse with token and user info
-        return new AuthResponse(token, user);
+        return new AuthResponse(token, UserDto.fromUser(user));
     }
 }
