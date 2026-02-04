@@ -11,7 +11,7 @@ import java.util.List;
 public class CategoryServiceImplementation implements CategoryService {
 //    private final List<Category> categories =  new ArrayList<>();
 
-    private Long nextId = 1000L;
+    // private Long nextId = 1000L;
 
     @Autowired
     private CategoryRepo categoryRepo;
