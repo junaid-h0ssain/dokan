@@ -39,6 +39,12 @@ export async function login(
   return post<AuthResponse>('/auth/login', { email, password });
 }
 
+// Logout is handled client-side by clearing the token
+export async function logout(): Promise<void> {
+  // Client-side logout - clear token from localStorage
+  localStorage.removeItem('auth_token');
+}
+
 // Product endpoints
 export async function getProducts(
   page: number = 1,
@@ -58,35 +64,35 @@ export async function getProducts(
     params.append('categories', filters.categoryIds.join(','));
   }
 
-  return get<ProductListResponse>(`/products?${params.toString()}`);
+  return get<ProductListResponse>(`/public/products?${params.toString()}`);
 }
 
 export async function getProductById(id: string): Promise<ApiResponse<Product>> {
-  return get<Product>(`/products/${id}`);
+  return get<Product>(`/public/products/${id}`);
 }
 
 export async function searchProducts(query: string): Promise<ApiResponse<Product[]>> {
-  return get<Product[]>(`/products/search?q=${encodeURIComponent(query)}`);
+  return get<Product[]>(`/public/products/search?q=${encodeURIComponent(query)}`);
 }
 
 // Category endpoints
 export async function getCategories(): Promise<ApiResponse<Category[]>> {
-  return get<Category[]>('/categories');
+  return get<Category[]>('/public/categories');
 }
 
 export async function createCategory(name: string): Promise<ApiResponse<Category>> {
-  return post<Category>('/categories', { name });
+  return post<Category>('/public/categories', { name });
 }
 
 export async function updateCategory(
   id: string,
   name: string
 ): Promise<ApiResponse<Category>> {
-  return put<Category>(`/categories/${id}`, { name });
+  return put<Category>(`/public/categories/${id}`, { name });
 }
 
 export async function deleteCategory(id: string): Promise<ApiResponse<void>> {
-  return del<void>(`/categories/${id}`);
+  return del<void>(`/public/categories/${id}`);
 }
 
 // Order endpoints
@@ -104,44 +110,44 @@ export async function getOrders(
     params.append('statuses', filters.statuses.join(','));
   }
 
-  return get<OrderListResponse>(`/orders?${params.toString()}`);
+  return get<OrderListResponse>(`/public/orders?${params.toString()}`);
 }
 
 export async function getOrderById(id: string): Promise<ApiResponse<Order>> {
-  return get<Order>(`/orders/${id}`);
+  return get<Order>(`/public/orders/${id}`);
 }
 
 export async function createOrder(items: CartItem[]): Promise<ApiResponse<Order>> {
-  return post<Order>('/orders', { items });
+  return post<Order>('/public/orders', { items });
 }
 
 export async function cancelOrder(id: string): Promise<ApiResponse<void>> {
-  return put<void>(`/orders/${id}/cancel`, {});
+  return put<void>(`/public/orders/${id}/cancel`, {});
 }
 
 // Cart endpoints
 export async function getCart(): Promise<ApiResponse<{ items: CartItem[] }>> {
-  return get<{ items: CartItem[] }>('/cart');
+  return get<{ items: CartItem[] }>('/public/cart');
 }
 
 export async function addToCart(
   productId: string,
   quantity: number
 ): Promise<ApiResponse<{ items: CartItem[] }>> {
-  return post<{ items: CartItem[] }>('/cart/items', { productId, quantity });
+  return post<{ items: CartItem[] }>('/public/cart/items', { productId, quantity });
 }
 
 export async function removeFromCart(productId: string): Promise<ApiResponse<void>> {
-  return del<void>(`/cart/items/${productId}`);
+  return del<void>(`/public/cart/items/${productId}`);
 }
 
 export async function updateCartItem(
   productId: string,
   quantity: number
 ): Promise<ApiResponse<{ items: CartItem[] }>> {
-  return put<{ items: CartItem[] }>(`/cart/items/${productId}`, { quantity });
+  return put<{ items: CartItem[] }>(`/public/cart/items/${productId}`, { quantity });
 }
 
 export async function clearCart(): Promise<ApiResponse<void>> {
-  return del<void>('/cart');
+  return del<void>('/public/cart');
 }
