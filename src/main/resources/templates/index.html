@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="API Test Web App for Dokan E-commerce API">
+    <title>Dokan API Test Web App</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Navigation Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h1>Dokan API</h1>
+                <p>Test Application</p>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item active" data-section="products">
+                    <span class="nav-icon">📦</span>
+                    <span class="nav-label">Products</span>
+                </li>
+                <li class="nav-item" data-section="categories">
+                    <span class="nav-icon">🏷️</span>
+                    <span class="nav-label">Categories</span>
+                </li>
+                <li class="nav-item" data-section="cart">
+                    <span class="nav-icon">🛒</span>
+                    <span class="nav-label">Shopping Cart</span>
+                </li>
+                <li class="nav-item" data-section="orders">
+                    <span class="nav-icon">📋</span>
+                    <span class="nav-label">Orders</span>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Products Section -->
+            <section id="products-section" class="content-section active">
+                <div class="section-header">
+                    <h2>Products</h2>
+                    <div class="section-actions">
+                        <button id="add-product-btn" class="btn btn-primary">Add New Product</button>
+                        <button id="refresh-products-btn" class="btn btn-secondary">Refresh</button>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <div class="products-controls">
+                        <input type="text" id="product-search" class="search-input" placeholder="Search products...">
+                        <select id="category-filter" class="filter-select">
+                            <option value="">All Categories</option>
+                        </select>
+                    </div>
+                    <div id="products-grid" class="products-grid">
+                        <!-- Product cards will be dynamically added here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Categories Section -->
+            <section id="categories-section" class="content-section">
+                <div class="section-header">
+                    <h2>Categories</h2>
+                    <div class="section-actions">
+                        <button id="add-category-btn" class="btn btn-primary">Add New Category</button>
+                        <button id="refresh-categories-btn" class="btn btn-secondary">Refresh</button>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <div id="categories-grid" class="categories-grid">
+                        <!-- Category cards will be dynamically added here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Shopping Cart Section -->
+            <section id="cart-section" class="content-section">
+                <div class="section-header">
+                    <h2>Shopping Cart</h2>
+                </div>
+                <div class="section-content">
+                    <!-- Cart content will be dynamically added here -->
+                </div>
+            </section>
+
+            <!-- Orders Section -->
+            <section id="orders-section" class="content-section">
+                <div class="section-header">
+                    <h2>Orders</h2>
+                </div>
+                <div class="section-content">
+                    <!-- Order content will be dynamically added here -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Modal Container -->
+    <!-- <div id="modal-container"></div> -->
+
+    <script src="/api-client.js"></script>
+    <script src="/app.js"></script>
+</body>
+</html>

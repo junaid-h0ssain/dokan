@@ -39,7 +39,7 @@ public class CategoryController {
 //        return categoryService.getcategoryById(categoryId);
 //    }
 
-    @GetMapping("api/public/categories/{categoryId}")
+    @GetMapping("/api/public/categories/{categoryId}")
     public ResponseEntity<Category> getCategoryById(@PathVariable("categoryId") Long categoryId) {
         Category category = categoryService.getCategoryById(categoryId);
         if (category == null) {
@@ -49,25 +49,14 @@ public class CategoryController {
     }
 
     //post function
-    @PostMapping("api/public/categories")
-    public String addCategory(@RequestBody Category category) {
+    @PostMapping("/api/public/categories")
+    public ResponseEntity<String> addCategory(@RequestBody Category category) {
         categoryService.createCategory(category);
-        return "category added";
+        return new ResponseEntity<>("Category " + category.getCategoryId() + " added", HttpStatus.CREATED);
     }
 
-//    @PostMapping("/api/public/categories")
-//    public ResponseEntity<String> addCategory(@RequestBody Category category) {
-//        categoryService.createCategory(category);
-//        return new ResponseEntity<>("Category " + category.getCategoryId() + " added", HttpStatus.CREATED);
-//    }
-
     //delete func
-//    @DeleteMapping("api/public/categories/{categoryId}")
-//    public String deleteCategory(@PathVariable Long categoryId) {
-//        return categoryService.deleteCategory(categoryId);
-//    }
-
-    @DeleteMapping("api/public/categories/{categoryId}")
+    @DeleteMapping("/api/public/categories/{categoryId}")
     public ResponseEntity<String> deleteCategory(@PathVariable Long categoryId) {
         Boolean status = categoryService.deleteCategory(categoryId);
         if (status) {
@@ -76,7 +65,7 @@ public class CategoryController {
         return new ResponseEntity<>("Category not found or does not exist", HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("api/public/categories/{categoryId}/{newcategoryName}")
+    @PutMapping("/api/public/categories/{categoryId}/{newcategoryName}")
     public ResponseEntity<String> updateCategory(@PathVariable Long categoryId, @PathVariable String newcategoryName) {
 
         String status = categoryService.updateCategory(categoryId,newcategoryName);
