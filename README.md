@@ -14,6 +14,10 @@ Using maven for dependencies, so using intellij idea dependecies can be auto-add
 ### How to validate
 Use [Postman](https://www.postman.com/downloads/) locally,     
 
+### Documentation
+
+Read [Here](doc.md) for more details
+
 ### Database 
 
 The Dokan API supports three database systems: H2 (in-memory), PostgreSQL, and MySQL. Use H2 for general testing. Additional apps need to be set up for others.
